@@ -74,7 +74,7 @@ def inbox():
             inbox_msg = inbox_msg + f'''<p><br><b>From:</b> {inbox_mail[x]["from"]["address"]}
 <br><b>Subject:</b> {inbox_mail[x]["subject"]}
 <br><b>Message:</b> {inbox_mail[x]["intro"]}</p>
-<center><a target="blank" href={html}>[See Full Message]</a></center>'''
+<center><a target="blank" href="{html}">[See Full Message]</a></center>'''
 
     return template('templates/inbox.html', inbox_messages=inbox_msg, address=address, msg_num=len(inbox_mail), password=password)
 
