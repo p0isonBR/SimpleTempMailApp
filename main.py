@@ -44,6 +44,10 @@ def home():
 @route('/inbox')
 def inbox():
     address = request.forms.get('email')
+
+    if '@' in address:
+        return '<script>alert("Input only username"); window.location.replace("/")</script>'
+    
     if len(address) == 0:
         address = fake.user_name() + "@" + tempmail.domains()[0]["domain"]
 
