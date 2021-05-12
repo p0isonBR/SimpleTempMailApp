@@ -99,7 +99,7 @@ app.route('/favicon.ico', method='GET')(get_favicon)
 app.route('/full/<id>', method='GET')(full_message)
 
 try:
-    server = MyWSGIRefServer(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+    server = WSGIServer(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
     app.run(server=server,reloader=False)
 except Exception as ex:
     errs = "Exception: %s" % repr(ex)
