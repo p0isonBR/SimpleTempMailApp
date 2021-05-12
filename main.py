@@ -48,7 +48,8 @@ def inbox():
     if '@' in address:
         return '<script>alert("Input only username"); window.location.replace("/")</script>'
     
-    if len(address) == 0:
+    address = address + "@" + tempmail.domains()[0]["domain"]
+    if len(address.split('@')[0]) == 0:
         address = fake.user_name() + "@" + tempmail.domains()[0]["domain"]
 
     password = request.forms.get('password')
