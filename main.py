@@ -36,7 +36,7 @@ def server_static(filepath):
     return static_file(filepath, root='/')
 
 
-@get('/favicon.ico')
+@route('/favicon.ico')
 def get_favicon():
     return server_static('/templates/favicon.ico')
 
