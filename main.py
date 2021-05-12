@@ -69,7 +69,7 @@ def inbox():
         header = ({"Authorization": "bearer " + my_mail._token})
 
         for x in range(len(inbox_mail)):
-            html = requests.get(base_url + "messages/" + inbox_mail[x]["id"], headers=header).json()["html"][0]
+            html = requests.get("https://api.mail.tm/messages/" + inbox_mail[x]["id"], headers=header).json()["html"][0]
 
             inbox_msg = inbox_msg + f'''<p><br><b>From:</b> {inbox_mail[x]["from"]["address"]}
 <br><b>Subject:</b> {inbox_mail[x]["subject"]}
