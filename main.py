@@ -46,7 +46,7 @@ def home():
     return template('templates/home.html', address="@" + tempmail.domains()[0]["domain"], password='Password')
 
 
-@route('/inbox')
+@route('/inbox', method='POST')
 def inbox():
     address = request.forms.get('email')
 
@@ -79,9 +79,15 @@ def inbox():
     return template('templates/inbox.html', inbox_messages=inbox_msg, address=address, msg_num=len(inbox_mail), password=password)
 
 
+@route('/inbox', method='GET')
+def redirect()
+    return '<script>window.location.replace("/")</script>'
+
+
 app = Bottle()
 app.route('/', method='GET')(home)
 app.route('/inbox', method='POST')(inbox)
+app.route('/inbox', method='GET')(redirect)
 app.route('/__exit', method=['GET','HEAD'])(__exit)
 app.route('/favicon.ico', method='GET')(get_favicon)
 
