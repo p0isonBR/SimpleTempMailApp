@@ -31,11 +31,6 @@ def __exit():
     server.stop()
 
 
-@route('/assets/<filepath:path>')
-def server_static(filepath):
-    return static_file(filepath, root='/')
-
-
 @route('/favicon.ico')
 def get_favicon():
     return static_file('favicon.ico', root='./templates/')
@@ -72,10 +67,11 @@ def inbox():
         inbox_msg = str()
 
         for x in range(len(inbox_mail)):
+            html = inbox_mail[x]
             inbox_msg = inbox_msg + f'''<p><br><b>From:</b> {inbox_mail[x]["from"]["address"]}
 <br><b>Subject:</b> {inbox_mail[x]["subject"]}
 <br><b>Message:</b> {inbox_mail[x]["intro"]}</p>
-<center><a target="blank" href="//api.mail.tm/messages/{inbox_mail[x]['id']}">[See full message]</a></center>'''
+<center><a target="blank" href="full">[See full message]</a></center>'''
 
     return template('templates/inbox.html', inbox_messages=inbox_msg, address=address, msg_num=len(inbox_mail), password=password)
 
