@@ -8,7 +8,7 @@ from faker import Faker
 fake = Faker()
 
 
-class MyWSGIRefServer(ServerAdapter):
+class WSGIServer(ServerAdapter):
     server = None
     def run(self, handler):
         from wsgiref.simple_server import make_server, WSGIRequestHandler
@@ -71,7 +71,7 @@ def inbox():
         for x in range(len(inbox_mail)):
             _id = inbox_mail[x]["id"]
             html = requests.get("https://api.mail.tm/messages/" + _id, headers=header).json()["html"][0]
-            open(_id + '.html', 'w').write(html)
+            open('templates/' + _id + '.html', 'w').write(html)
             inbox_msg = inbox_msg + f'''<p><br><b>From:</b> {inbox_mail[x]["from"]["address"]}
 <br><b>Subject:</b> {inbox_mail[x]["subject"]}
 <br><b>Message:</b> {inbox_mail[x]["intro"]}</p>
@@ -82,7 +82,7 @@ def inbox():
 
 @route('/full/<id>', method='GET')
 def full_message(id):
-    return template(id + '.html')
+    return template('templates/' + id + '.html')
 
 
 @route('/inbox', method='GET')
