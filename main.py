@@ -80,7 +80,7 @@ def inbox():
 
 
 @route('/inbox', method='GET')
-def redirect()
+def redirect():
     return '<script>window.location.replace("/")</script>'
 
 
