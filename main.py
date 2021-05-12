@@ -33,7 +33,12 @@ def __exit():
 
 @route('/assets/<filepath:path>')
 def server_static(filepath):
-    return static_file(filepath, root='/sdcard')
+    return static_file(filepath, root='/')
+
+
+@get('/favicon.ico')
+def get_favicon():
+    return server_static('/templates/favicon.ico')
 
 
 @route('/')
