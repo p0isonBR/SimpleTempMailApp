@@ -75,7 +75,7 @@ app.route('/__exit', method=['GET','HEAD'])(__exit)
 app.route('/assets/<filepath:path>', method='GET')(server_static)
 
 try:
-    server = MyWSGIRefServer(host="0.0.0.0", port="8080")
+    server = MyWSGIRefServer()
     app.run(server=server,reloader=False)
 except Exception as ex:
     errs = "Exception: %s" % repr(ex)
