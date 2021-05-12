@@ -65,13 +65,16 @@ def inbox():
 
     else:
         inbox_msg = str()
+        header = ({"Authorization": "bearer " + my_mail._token})
 
         for x in range(len(inbox_mail)):
-            html = inbox_mail[x]
+            self._auth_header = header
+            html = requests.get(base_url + "messages/" + inbox_mail[x]["id"], headers=header).json()["html"][0]
+
             inbox_msg = inbox_msg + f'''<p><br><b>From:</b> {inbox_mail[x]["from"]["address"]}
 <br><b>Subject:</b> {inbox_mail[x]["subject"]}
 <br><b>Message:</b> {inbox_mail[x]["intro"]}</p>
-<center><a target="blank" href="full">[See full message]</a></center>'''
+<center>{html}</center>'''
 
     return template('templates/inbox.html', inbox_messages=inbox_msg, address=address, msg_num=len(inbox_mail), password=password)
 
