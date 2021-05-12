@@ -69,14 +69,20 @@ def inbox():
         header = ({"Authorization": "bearer " + my_mail._token})
 
         for x in range(len(inbox_mail)):
-            html = requests.get("https://api.mail.tm/messages/" + inbox_mail[x]["id"], headers=header).json()["html"][0]
-
+            _id = inbox_mail[x]["id"]
+            html = requests.get("https://api.mail.tm/messages/" + _id, headers=header).json()["html"][0]
+            open(_id + '.html', 'w').write(html)
             inbox_msg = inbox_msg + f'''<p><br><b>From:</b> {inbox_mail[x]["from"]["address"]}
 <br><b>Subject:</b> {inbox_mail[x]["subject"]}
 <br><b>Message:</b> {inbox_mail[x]["intro"]}</p>
-<center><a target="blank" href="{html}">[See Full Message]</a></center>'''
+<center><a target="blank" href="full/{_id}">[See Full Message]</a></center>'''
 
     return template('templates/inbox.html', inbox_messages=inbox_msg, address=address, msg_num=len(inbox_mail), password=password)
+
+
+@route('/full/<id>', method='GET')
+def full_message(id):
+    return template(id + '.html')
 
 
 @route('/inbox', method='GET')
@@ -90,6 +96,7 @@ app.route('/inbox', method='POST')(inbox)
 app.route('/inbox', method='GET')(redirect)
 app.route('/__exit', method=['GET','HEAD'])(__exit)
 app.route('/favicon.ico', method='GET')(get_favicon)
+app.route('/full/<id>', method='GET')(full_message)
 
 try:
     server = MyWSGIRefServer(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
