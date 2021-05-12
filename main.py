@@ -38,7 +38,7 @@ def server_static(filepath):
 
 @route('/favicon.ico')
 def get_favicon():
-    return server_static('favicon.ico', root='./templates/')
+    return static_file('favicon.ico', root='./templates/')
 
 
 @route('/')
@@ -83,7 +83,7 @@ app = Bottle()
 app.route('/', method='GET')(home)
 app.route('/inbox', method='POST')(inbox)
 app.route('/__exit', method=['GET','HEAD'])(__exit)
-app.route('/assets/<filepath:path>', method='GET')(server_static)
+app.route('/favicon.ico', method='GET')(get_favicon)
 
 try:
     server = MyWSGIRefServer(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
