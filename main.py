@@ -1,6 +1,7 @@
 from bottle import Bottle, ServerAdapter
 from bottle import run, debug, route, error, static_file, template, request
 import tempmail
+import os
 from faker import Faker
 
 fake = Faker()
